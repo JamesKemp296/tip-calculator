@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>splttr</title>
+    <style>
+      .hidden{
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>splttr</h1>
+    <hr>
+    <form>
+      <div class="form-group">
+        <label for="billAmount">
+          How much was the bill?
+        </label>
+        <span>$</span>
+        <input
+          id="billAmount"
+          type="number"
+          min="0"
+          step="0.01"
+          required
+        >
+      </div>
+      <div class="form-group">
+        <label for="tipPercent">
+          What percentage do you want to tip?
+        </label>
+        <input
+          id="tipPercent"
+          type="number"
+          min="0"
+          step="0.01"
+          required
+        >
+        <span>%</span>
+      </div>
+      <div class="form-group">
+        <label for="partySize">
+          How many people are in your party?
+        </label>
+        <input
+          id="partySize"
+          type="number"
+          min="1"
+          required
+        >
+      </div>
+      <button type="submit">Calculate!</button>
+    </form>
+    <hr>
+    <div class="hidden" id="answer">
+      <h3>The tip should be $<span id="tipAmount"></span></h3>
+      <h3>The total check should be $<span id="totalAmount"></span></h3>
+      <h3>Each person should pay $<span id="yourShare"></span></h3>
+    </div>
+    <script>
+      const form = document.querySelector('form')
+
+      function calculate(event){
+        event.preventDefault()
+
+        const billAmount = Number(document.querySelector('#billAmount').value)
+        const tipPercent = Number(document.querySelector('#tipPercent').value)
+        const partySize = Number(document.querySelector('#partySize').value)
+        const tipAmount = billAmount * (tipPercent / 100)
+        const totalAmount = billAmount + tipAmount
+        const yourShare = totalAmount / partySize
+
+        document.querySelector('#tipAmount').textContent = tipAmount.toFixed(2)
+        document.querySelector('#totalAmount').textContent = totalAmount.toFixed(2)
+        document.querySelector('#yourShare').textContent = yourShare.toFixed(2)
+
+        document.querySelector('#answer').classList.remove('hidden')
+      }
+
+      form.addEventListener('submit', calculate)
+    </script>
+  </body>
+</html>
