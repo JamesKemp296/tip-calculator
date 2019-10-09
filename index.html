@@ -62,6 +62,8 @@
     </div>
     <script>
       const form = document.querySelector('form')
+      const partySizeInput = document.querySelector('#partySize')
+
 
       function calculate(event){
         event.preventDefault()
@@ -80,7 +82,20 @@
         document.querySelector('#answer').classList.remove('hidden')
       }
 
+      function handlePartySizeChange(){
+        const partySize = Number(document.querySelector('#partySize').value)
+        if (partySize >= 6) {
+          alert(`A fixed tip of 18% will apply to parties of 6 or more`)
+          document.querySelector('#tipPercent').value = 18
+          document.querySelector('#tipPercent').readOnly = true
+        }else if (partySize < 6) {
+          document.querySelector('#tipPercent').readOnly = false
+        }
+        
+      }
+
       form.addEventListener('submit', calculate)
+      partySizeInput.addEventListener('change', handlePartySizeChange)
     </script>
   </body>
 </html>
